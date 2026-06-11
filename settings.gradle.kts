@@ -17,3 +17,4 @@ dependencyResolutionManagement {
 rootProject.name = "spm-import-kt-83882-repro"
 
 include(":consumer")
+include(":other")
