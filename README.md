@@ -1,12 +1,15 @@
-# Minimal repro for [KT-83882](https://youtrack.jetbrains.com/issue/KT-83882)
+# SwiftPM Import repro
 
-> "Search for a way to reproduce 'Missing package product' in KMP IDE plugin"
+Minimal reproduction project for Kotlin Multiplatform's
+[SwiftPM Import](https://kotlinlang.org/docs/multiplatform/multiplatform-spm-import.html)
+issues. Currently reproduces:
 
-Deterministic minimal reproduction of the **`XCSwiftPackageProductDependency` missing
-`package = <UUID>` linkage** bug in Kotlin Multiplatform's SwiftPM Import.
-
-Also exhibits the symptom of [KT-83876](https://youtrack.jetbrains.com/issue/KT-83876)
-("Improve idempotency checks for integrateLinkagePackage") on re-runs.
+- [KT-83882](https://youtrack.jetbrains.com/issue/KT-83882) — "Missing package product"
+  in KMP IDE plugin: deterministic reproduction of the
+  **`XCSwiftPackageProductDependency` missing `package = <UUID>` linkage** bug.
+- [KT-83876](https://youtrack.jetbrains.com/issue/KT-83876) — "Improve idempotency
+  checks for integrateLinkagePackage": the broken state above is not self-healed
+  on re-runs.
 
 ## TL;DR
 
