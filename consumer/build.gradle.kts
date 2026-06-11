@@ -21,9 +21,15 @@ kotlin {
 
     swiftPMDependencies {
         iosMinimumDeploymentTarget.set("17.0")
-        localSwiftPackage(
-            directory = rootProject.layout.projectDirectory,
-            products = listOf("MinimalBridge"),
+        // KT-85807 repro: consume the repo itself as a *remote* git package via
+        // a file:// URL (resolved through the regular SwiftPM fetch/checkout
+        // machinery), so that fetchSyntheticImportProjectPackages actually
+        // creates a checkout. The path is derived from rootProject.projectDir,
+        // so this works on any machine without edits.
+        swiftPackage(
+            url = url("file://${rootProject.projectDir.absolutePath}"),
+            version = from("1.0.0"),
+            products = listOf(product("MinimalBridge")),
         )
     }
 }

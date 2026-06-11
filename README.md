@@ -1,5 +1,16 @@
 # SwiftPM Import repro
 
+> **This branch (`repro/kt-85807`)** reproduces
+> [KT-85807](https://youtrack.jetbrains.com/issue/KT-85807) — "Fetch task is
+> not invalidated if checkout is removed". `consumer/build.gradle.kts` is
+> switched to the `swiftPackage(url = ...)` form (a `file://` URL pointing at
+> this repo itself, tag `v1.0.0`; the path is derived from
+> `rootProject.projectDir`, so it works on any machine). Run
+> [`./repro-kt-85807.sh`](./repro-kt-85807.sh): it runs
+> `:consumer:fetchSyntheticImportProjectPackages`, deletes
+> `consumer/build/kotlin/swiftPMCheckout/checkouts/`, and re-runs the task —
+> which incorrectly reports `UP-TO-DATE` and does not recreate the checkout.
+
 Minimal reproduction project for Kotlin Multiplatform's
 [SwiftPM Import](https://kotlinlang.org/docs/multiplatform/multiplatform-spm-import.html)
 issues. Currently reproduces:
