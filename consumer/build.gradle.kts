@@ -25,5 +25,12 @@ kotlin {
             directory = rootProject.layout.projectDirectory,
             products = listOf("MinimalBridge"),
         )
+        // KT-85798 validation: remote dependency so `swift package resolve` actually
+        // populates the checkout dir that downstream xcodebuild steps must reuse.
+        swiftPackage(
+            url = "https://github.com/kishikawakatsumi/KeychainAccess.git",
+            version = "4.2.0",
+            products = listOf("KeychainAccess"),
+        )
     }
 }
