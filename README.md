@@ -1,5 +1,20 @@
 # SwiftPM Import repro
 
+> **This branch (`repro/kt-85820`)** reproduces
+> [KT-85820](https://youtrack.jetbrains.com/issue/KT-85820) — "Consuming just
+> the package without a product doesn't actually enforce versions with lock
+> file alignment". Run [`./repro-kt-85820.sh`](./repro-kt-85820.sh): it builds
+> a fully local scenario in a temp dir (a "TinyDep" git package tagged
+> 1.0.0/1.1.0, plus a copy of this repo whose `MinimalBridge` depends on
+> TinyDep `from: "1.0.0"`), then consumes TinyDep from the Gradle DSL with
+> `version = exact("1.0.0"), products = listOf()`. The persisted lock file
+> `.swiftpm-locks/default/swiftImport/Package.resolved` pins TinyDep at
+> **1.1.0** (the `exact()` constraint is ignored), while the synthetic project
+> resolution pins **1.0.0**. A control run with
+> `products = listOf(product("TinyDep"))` pins 1.0.0 everywhere. All paths are
+> substituted at runtime, so the script works on any machine; it never
+> commits/tags in this repo (only in the temp copy).
+
 Minimal reproduction project for Kotlin Multiplatform's
 [SwiftPM Import](https://kotlinlang.org/docs/multiplatform/multiplatform-spm-import.html)
 issues. Currently reproduces:
